@@ -1,75 +1,78 @@
-# Nuxt Minimal Starter
+# El Archivo Arcano
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Tu biblioteca de descripciones para juegos de rol. Palabras que dan vida a tus mundos.
 
-## Setup
+## Configuración inicial
 
-Make sure to install dependencies:
+### 1. Variables de entorno
+
+Copia el archivo `.env.example` a `.env` y configura tus credenciales de Supabase:
 
 ```bash
-# npm
+cp .env.example .env
+```
+
+Edita el archivo `.env` con tus credenciales:
+
+```
+SUPABASE_URL=tu_url_de_supabase
+SUPABASE_ANON_KEY=tu_clave_anon_de_supabase
+```
+
+### 2. Instalación
+
+```bash
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
+### 3. Desarrollo
 
 ```bash
-# npm
 npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
-
-Build the application for production:
+### 4. Build
 
 ```bash
-# npm
 npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
 ```
 
-Locally preview production build:
+## Características implementadas
 
-```bash
-# npm
-npm run preview
+- ✅ Autenticación con Supabase
+- ✅ Login y registro de usuarios
+- ✅ Protección de rutas de administrador
+- ✅ Navbar con estado de autenticación
+- ⏳ Panel de administración (próximamente)
+- ⏳ CRUD de descripciones (próximamente)
+- ⏳ Sistema de favoritos (próximamente)
 
-# pnpm
-pnpm preview
+## Configurar roles de administrador
 
-# yarn
-yarn preview
+Para hacer que un usuario sea administrador, actualiza el campo `role` en la metadata del usuario en Supabase:
 
-# bun
-bun run preview
+1. Ve a tu proyecto en Supabase
+2. Authentication → Users
+3. Selecciona el usuario
+4. En "User Metadata", agrega:
+   ```json
+   {
+     "role": "admin"
+   }
+   ```
+
+## Estructura del proyecto
+
+```
+app/
+├── components/       # Componentes Vue
+├── composables/      # Composables de Vue (lógica reutilizable)
+├── layouts/          # Layouts de la aplicación
+├── middleware/       # Middleware de rutas
+├── pages/            # Páginas de la aplicación
+└── plugins/          # Plugins de Nuxt (Supabase)
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+---
+
+For more information about Nuxt, check out the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction).
