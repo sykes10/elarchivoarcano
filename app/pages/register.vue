@@ -1,93 +1,99 @@
 <template>
-  <div class="min-h-[70vh] flex items-center justify-center">
-    <div class="bg-papiro border-2 border-oro rounded-lg shadow-xl p-8 w-full max-w-md">
-      <div class="text-center mb-8">
-        <h1 class="font-cinzel text-3xl text-arcano mb-2">Crear cuenta</h1>
-        <p class="font-lora text-carbon/70">Únete a El Archivo Arcano</p>
-      </div>
+  <div class="bg-papiro flex flex-col">
+    <div class="flex-1 flex items-center justify-center px-4 pt-10">
+      <div class="rounded-lg shadow-2xl p-8 w-full max-w-md border-2 border-oro">
+        <div class="text-center mb-6">
+          <h1 class="text-4xl font-bold mb-2 font-cinzel text-arcano">
+            Crear cuenta
+          </h1>
+          <p class="text-gray-600 font-lora">
+            Únete a El Archivo Arcano
+          </p>
+        </div>
 
-      <form @submit.prevent="handleRegister" class="space-y-6">
-        <div>
-          <label for="name" class="block font-inter text-sm font-medium text-carbon mb-2">
-            Nombre
-          </label>
-          <input
-            id="name"
-            v-model="name"
-            type="text"
-            required
-            class="w-full px-4 py-3 border border-gris rounded-lg focus:outline-none focus:ring-2 focus:ring-oro focus:border-transparent font-lora"
-            placeholder="Tu nombre"
+        <form class="space-y-4" @submit.prevent="handleRegister">
+          <div>
+            <label for="name" class="block text-sm font-medium text-gray-900 mb-2 font-inter">
+              Nombre
+            </label>
+            <input
+              id="name"
+              v-model="name"
+              type="text"
+              required
+              class="w-full px-4 py-3 border-2 border-gris rounded-lg focus:outline-none focus:ring-2 bg-white text-gray-900 font-lora"
+              placeholder="Tu nombre"
+            >
+          </div>
+
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-900 mb-2 font-inter">
+              Correo electrónico
+            </label>
+            <input
+              id="email"
+              v-model="email"
+              type="email"
+              required
+              class="w-full px-4 py-3 border-2 border-gris rounded-lg focus:outline-none focus:ring-2 bg-white text-gray-900 font-lora"
+              placeholder="tu@email.com"
+            >
+          </div>
+
+          <div>
+            <label for="password" class="block text-sm font-medium text-gray-900 mb-2 font-inter">
+              Contraseña
+            </label>
+            <input
+              id="password"
+              v-model="password"
+              type="password"
+              required
+              minlength="6"
+              class="w-full px-4 py-3 border-2 border-gris rounded-lg focus:outline-none focus:ring-2 bg-white text-gray-900 font-lora"
+              placeholder="Mínimo 6 caracteres"
+            >
+          </div>
+
+          <div>
+            <label for="confirmPassword" class="block text-sm font-medium text-gray-900 mb-2 font-inter">
+              Confirmar contraseña
+            </label>
+            <input
+              id="confirmPassword"
+              v-model="confirmPassword"
+              type="password"
+              required
+              class="w-full px-4 py-3 border-2 border-gris rounded-lg focus:outline-none focus:ring-2 bg-white text-gray-900 font-lora"
+              placeholder="Repite tu contraseña"
+            >
+          </div>
+
+          <div v-if="error" class="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm font-lora">
+            {{ error }}
+          </div>
+
+          <div v-if="success" class="bg-green-50 border border-green-200 text-green-600 px-4 py-3 rounded-lg text-sm font-lora">
+            {{ success }}
+          </div>
+
+          <button
+            type="submit"
+            :disabled="loading"
+            class="w-full text-white py-3 rounded-lg transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed bg-arcano hover:bg-oro font-inter"
           >
+            {{ loading ? 'Creando cuenta...' : 'Crear cuenta' }}
+          </button>
+        </form>
+
+        <div class="mt-4 text-center">
+          <p class="text-sm text-gray-600 font-lora">
+            ¿Ya tienes cuenta?
+            <NuxtLink to="/login" class="font-medium text-oro">
+              Inicia sesión aquí
+            </NuxtLink>
+          </p>
         </div>
-
-        <div>
-          <label for="email" class="block font-inter text-sm font-medium text-carbon mb-2">
-            Correo electrónico
-          </label>
-          <input
-            id="email"
-            v-model="email"
-            type="email"
-            required
-            class="w-full px-4 py-3 border border-gris rounded-lg focus:outline-none focus:ring-2 focus:ring-oro focus:border-transparent font-lora"
-            placeholder="tu@email.com"
-          >
-        </div>
-
-        <div>
-          <label for="password" class="block font-inter text-sm font-medium text-carbon mb-2">
-            Contraseña
-          </label>
-          <input
-            id="password"
-            v-model="password"
-            type="password"
-            required
-            minlength="6"
-            class="w-full px-4 py-3 border border-gris rounded-lg focus:outline-none focus:ring-2 focus:ring-oro focus:border-transparent font-lora"
-            placeholder="Mínimo 6 caracteres"
-          >
-        </div>
-
-        <div>
-          <label for="confirmPassword" class="block font-inter text-sm font-medium text-carbon mb-2">
-            Confirmar contraseña
-          </label>
-          <input
-            id="confirmPassword"
-            v-model="confirmPassword"
-            type="password"
-            required
-            class="w-full px-4 py-3 border border-gris rounded-lg focus:outline-none focus:ring-2 focus:ring-oro focus:border-transparent font-lora"
-            placeholder="Repite tu contraseña"
-          >
-        </div>
-
-        <div v-if="error" class="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg font-lora text-sm">
-          {{ error }}
-        </div>
-
-        <div v-if="success" class="bg-green-50 border border-green-200 text-green-600 px-4 py-3 rounded-lg font-lora text-sm">
-          {{ success }}
-        </div>
-
-        <button
-          type="submit"
-          :disabled="loading"
-          class="w-full bg-arcano text-white py-3 rounded-lg hover:bg-oro hover:text-carbon transition-colors font-inter font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {{ loading ? 'Creando cuenta...' : 'Crear cuenta' }}
-        </button>
-      </form>
-
-      <div class="mt-6 text-center">
-        <p class="font-lora text-sm text-carbon/70">
-          ¿Ya tienes cuenta?
-          <NuxtLink to="/login" class="text-oro hover:text-arcano font-medium">
-            Inicia sesión aquí
-          </NuxtLink>
-        </p>
       </div>
     </div>
   </div>
